@@ -1,4 +1,4 @@
-## Function that loops through the df and creates matches with different groups
+## Oates Family secret santa match maker
 
 library(tidyverse)
 
@@ -36,10 +36,6 @@ match_maker <- function() {
   return(matches)
   
 }
-
-
-#sample_number <- sample(length(temp_filtered), 1)
-#filter(temp_names, Person != xmas_match | Person != temp_names$Person[i])
 
 match_maker()
 
