@@ -1,0 +1,119 @@
+---
+title: "Secret Santa Script"
+author: "Peter Menzies"
+date: "8/11/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(here)
+```
+
+## Read in data
+
+and get rid of extra columns with `select()`
+
+```{r}
+xmas_names <- read_csv(here::here("xmas_names.csv")) %>% 
+  select(Person, Group)
+```
+
+## How to create a vector of a row ?? 
+
+It should be the data frame with index `[2,1:2]`
+
+
+## Creating matches (or failing to do so)
+
+```{r}
+list_length_vec <- 1:nrow(xmas_names)
+# 
+# for (i in seq_along(xmas_names)) {
+#   pick_number <- sample(1:nrow(xmas_names), 1)
+#   match <- xmas_names[sample(1:nrow(xmas_names), 1), 1:2]
+#   print(paste(xmas_names$Person[[i]], "+", match[i, pick_number]))
+# }
+```
+## Ruling out immediate family with `filter()` function
+
+```{r}
+match <- sample(xmas_names$Person, 1) 
+
+
+match_vec <- filter(xmas_names, Person == choice1)
+```
+
+## For loop
+
+Try picking a random name from the df, if group is different, append pair to new vector and remove names from df, if not try again
+
+```{r}
+
+# create an empty vector to append matched to
+matches <- vector(mode = "character", length = 13)
+
+# create match function
+
+matcher <- function(i, temp_df) {
+  
+  choice1 <- temp_df[[i, 1]]
+  choice1_vec <- filter(temp_df, Person == choice1)
+  
+  match <- sample(temp_df$Person, 1)
+  match_vec <- filter(temp_df, Person == match)
+  
+  return(match_vec)
+}
+
+secret_santa <- function() {
+  
+  temp_df <- xmas_names 
+  
+  for (i in list_length_vec) {
+    
+    match_vec <- matcher(i, temp_df)
+    
+    while (match_vec$Group[1] == choice1_vec$Group[1]) {
+      
+      matcher(i, temp_df)
+
+    }
+    
+      
+    names_combined <- paste(choice1, "+", match_vec$Person[1])
+    
+    matches[i] <- names_combined
+    
+    temp_df <- filter(temp_df, Person != choice1)
+    temp_df <- filter(temp_df, Person != match)
+    
+  }
+}
+
+
+
+
+secret_santa()
+```
+
+```{r}
+# test
+
+random <- function(poop) {
+  blahblah <- paste(poop, "more words")
+  
+  another_one <- paste(poop, "other things")
+  
+  return(blahblah) +
+  return(another_one)
+}
+
+random("some words and")
+```
+
+
+
+
+
