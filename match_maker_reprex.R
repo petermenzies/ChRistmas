@@ -1,28 +1,32 @@
-## Oates Family secret santa match maker
+# Reprex names tibble creation
 
-library(tidyverse)
-library(here)
+reprex_names <- tibble::tribble(
+                   ~Person,      ~Group,
+                   "Peter",    "my_fam",
+                    "Holt",    "my_fam",
+                  "Austin",   "rob_fam",
+                   "Jesse",   "rob_fam",
+                    "Justin", "steve_fam",
+                  "Adam", "steve_fam",
+                  )
 
-xmas_names <- read_csv(here::here("xmas_names.csv")) %>% 
-  select(Person, Group)
-
-
-match_maker <- function() {
+match_maker_reprex <- function() {
   
-  dim_names <- xmas_names
-  matches <- vector(mode = "character", length = 13)
+  dim_names <- reprex_names
+  matches <- vector(mode = "character", length = 3)
   already_matched <- vector(mode = "character")
   
-  for (i in 1:13) {
-    temp_names <- xmas_names %>%
+  for (i in 1:3) {
+    temp_names <- reprex_names %>%
       filter(Group != dim_names$Group[i]) %>% 
       filter(!Person %in% already_matched)
     
     if (nrow(temp_names) == 0) {
-      return(match_maker())
+      return(match_maker_reprex())
     }
-    
+      
     sample_number <- sample(1:nrow(temp_names), 1, replace = FALSE)
+    
     
     xmas_match <- temp_names$Person[sample_number]
     
@@ -39,13 +43,14 @@ match_maker <- function() {
       filter(Person != xmas_match)
     
   }
-  
-  return(matches)
+    
+    return(matches)
+    
+
   
 }
 
-match_maker()
 
-
+match_maker_reprex()
 
 
