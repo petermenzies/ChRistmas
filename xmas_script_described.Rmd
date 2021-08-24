@@ -1,0 +1,12 @@
+---
+title: "Christmas Script Chronicle"
+author: "Peter Menzies"
+date: "8/24/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## How it took me incredibly long to make a simple function non-elegantly
