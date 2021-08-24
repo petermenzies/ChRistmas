@@ -60,7 +60,8 @@ match_maker <- function() {
     temp_names2 <- xmas_names %>%
       filter(Group != dim_names2$Group[i]) %>%
       filter(!Person %in% xmas_match_vec) %>% 
-      filter(!Person %in% already_matched2)
+      filter(!Person %in% already_matched2) %>% 
+      filter(Person != output_df1$Receiver[i])
     
     
     if (nrow(temp_names2) == 0) {
@@ -90,7 +91,7 @@ match_maker <- function() {
   
 }
 
-list_2021 <- match_maker()
+match_maker()
 
 
 
