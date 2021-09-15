@@ -13,6 +13,7 @@ match_maker <- function() {
   already_matched <- vector(mode = "character")
   
   for (i in 1:nrow(xmas_names)) {
+    
     temp_names <- xmas_names %>%
       filter(Group != xmas_names$Group[i]) %>% 
       filter(!Person %in% already_matched)
